@@ -1,0 +1,45 @@
+CREATE DATABASE sirehmed_psql;
+
+CREATE TYPE gender AS ENUM('masculine','femenine');
+CREATE TYPE blood_type AS ENUM('O-','O+','B-','B+','A-','A+','AB-','AB+');
+CREATE TYPE condition_type AS ENUM('allergy','suffering');
+CREATE TYPE procedure_type AS ENUM('operation','consultation');
+
+CREATE TABLE patients(
+	id int PRIMARY KEY NOT NULL,
+	name varchar(60) NOT NULL,
+	last_name varchar(60) NOT NULL,
+	age int NOT NULL,
+	gender gender NOT NULL,
+	blood_type blood_type NOT NULL,
+	birth_date date NOT NULL,
+	emergency_name varchar(120),
+	emergency_phone varchar(10),
+	body_mass_index decimal,
+	active boolean DEFAULT TRUE
+);
+
+CREATE TABLE medical_personnel(
+	id int PRIMARY KEY NOT NULL,
+	name varchar(60) NOT NULL,
+	last_name varchar(60) NOT NULL,
+	specialty varchar(60) NOT NULL,
+	active boolean DEFAULT TRUE
+);
+
+CREATE TABLE medical_conditions(
+	id int PRIMARY KEY NOT NULL,
+	patient_id int REFERENCES patients(id) ON DELETE CASCADE,
+	condition varchar(60) NOT NULL,
+	type condition_type NOT NULL
+);
+
+CREATE TABLE medical_procedures(
+	id int PRIMARY KEY NOT NULL,
+	patient_id int REFERENCES patients(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	cause varchar(255) NOT NULL,
+	type procedure_type NOT NULL,
+	observations varchar(255),
+	doctor_id int REFERENCES medical_personnel(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
