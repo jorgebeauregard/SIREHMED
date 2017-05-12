@@ -115,7 +115,7 @@ DELIMITER ;
 
 
 
-View: show all fucking users
+View: show all  users
 	CREATE VIEW patient_info AS 
 		select	
 			CONCAT(patients.name,' ',patients.last_name) as name,
