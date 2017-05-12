@@ -35,7 +35,7 @@ class Patient{
     public function setEmail($email){
         $this->email = $email;
     }
-
+    //gets id from user using email 
     public function getId($email){
         try{
             $query = $this->mysql->prepare('SELECT id FROM users WHERE email = ?');
@@ -104,8 +104,21 @@ class Patient{
         }
     }
 
-     public function get(){
-        //name,last_name,birth_date,age,gender,bloodtype,emergency contact name, emergency contact phone, bmi, height, weight
+    public function getMedicalConditionList(){
+        try{
+            $query = $this->mysql->prepare('SELECT condition_description,condition_type FROM medical_conditions WHERE patient_id = ?');
+            $query->bindParam(1,$this->id,PDO::PARAM_INT);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_OBJ);
+
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }
+    }
+
+    //Profile view
+    public function get(){
         try{
             $query = $this->mysql->prepare('SELECT * FROM patients WHERE id = ?');
             $query->bindParam(1,$this->id,PDO::PARAM_INT);
@@ -117,7 +130,7 @@ class Patient{
             echo  $e->getMessage();
         }
     }
-
+    //Session control
     public function getLogInInfo(){
         try{
             $query = $this->mysql->prepare('SELECT *
