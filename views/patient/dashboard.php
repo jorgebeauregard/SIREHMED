@@ -1,4 +1,23 @@
 <!doctype html>
+<?php
+
+require_once "../../database/DatabaseMySQL.php";
+require_once "../../models/Patient.php";
+
+session_start();
+
+$db = DatabaseMySQL::connect();
+
+$user = new Patient($db);
+$e=$_SESSION['email'];
+$id_obj = $user->getId($e);
+$user->setId($id_obj->id);
+$info_user = $user->get();
+
+$procedures = $user->getMedicalProceduresList();
+
+
+?>
 <html lang="en">
 <head>
 
@@ -79,7 +98,7 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-
+                    <?php foreach($procedures as $procedure){?>
                         <div class="col-lg-4 col-sm-6">
                             <div class="card">
                                 <div class="content">
@@ -91,8 +110,8 @@
                                         </div>
                                         <div class="col-xs-7">
                                             <div class="numbers">
-                                                <p>Procedure Type</p>
-                                                Name of procedure
+                                                <p><?php echo($procedure->procedure_type)?></p>
+                                                <?php echo($procedure->cause)?>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +125,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <?php } ?>
                         
 
                     </div>

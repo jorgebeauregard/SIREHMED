@@ -8,11 +8,14 @@ require_once "../../models/Patient.php";
 session_start();
 
 $db = DatabaseMySQL::connect();
+
 $user = new Patient($db);
 $e=$_SESSION['email'];
 $id_obj = $user->getId($e);
 $user->setId($id_obj->id);
 $info_user = $user->get();
+
+$conditions = $user->getMedicalConditionList();
 
 ?>
 
@@ -115,14 +118,15 @@ $info_user = $user->get();
                             </div>
                             <div class="content">
                                 <ul class="list-unstyled team-members">
+                                    <?php foreach($conditions as $condition){
+                                    ?>
+
                                             <li>
                                                 <div class="row">
                                                     <div class="col-xs-9">
-                                                        Condition 1
+                                                        <?php echo($condition->condition_description)?>
                                                         <br />
-                                                        <span class="text-danger"><small>Condition Type</small></span>
-                                                        <br />
-                                                        <span class="text-success"><small>Medicine</small></span>
+                                                        <span class="text-danger"><small><?php echo($condition->condition_type)?></small></span>
                                                     </div>
                                                     
                                                     <div class="col-xs-3 text-right">
@@ -130,35 +134,9 @@ $info_user = $user->get();
                                                     </div>
                                                 </div>
                                             </li>
-
-                                            <li>
-                                                <div class="row">
-                                                    <div class="col-xs-9">
-                                                        Condition 2
-                                                        <br />
-                                                        <span class="text-danger"><small>Condition Type</small></span>
-
-                                                    </div>
-                                                    <div class="col-xs-3 text-right">
-                                                        <btn class="btn btn-sm btn-success btn-icon"><i class="fa fa-file"></i></btn>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            <li>
-                                                <div class="row">
-                                                    <div class="col-xs-9">
-                                                        Condition 3
-                                                        <br />
-                                                        <span class="text-danger"><small>Condition Type</small></span>            
-                                                    </div>
-
-                                                    <div class="col-xs-3 text-right">
-                                                        <btn class="btn btn-sm btn-success btn-icon"><i class="fa fa-file"></i></btn>
-                                                    </div>
-                                                </div>
-                                            </li>
                                         </ul>
+                                    <?php } ?>    
+                                    
                             </div>
                         </div>
                     </div>
