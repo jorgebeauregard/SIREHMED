@@ -98,6 +98,19 @@ class Personal{
             echo  $e->getMessage();
         }
     }
+
+    public function getPatientInfo($id){
+        try{
+            $query = $this->mysql->prepare('SELECT *
+                                        FROM patients where patients.id = ?;');
+            $query->bindParam(1, $id, PDO::PARAM_INT);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_OBJ);
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }
+    }
 }
 ?>
 
