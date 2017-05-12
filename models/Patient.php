@@ -134,13 +134,13 @@ class Patient{
     //Show procedure based on id of it
     public function showMedicalProcedure($procedure_id){
         try{
-            $query = $this->mysql->prepare('SELECT medical_procedures.cause, medical_procedures.procedure_type, medical_procedures.observations,medical_procedures.date_realized, CONCAT(medical_personnel.name,\' \', medical_personnel.last_name) AS name, medical.medical_personnel.specialty FROM medical_procedures INNER JOIN medical_personnel ON medical_procedures.doctor_id = medical_personnel.id WHERE medical_procedures.id = ?');
+            $query = $this->mysql->prepare('SELECT medical_procedures.cause, medical_procedures.procedure_type, medical_procedures.observations,medical_procedures.date_realized, CONCAT(medical_personnel.name,\' \', medical_personnel.last_name) AS name, medical_personnel.specialty FROM medical_procedures INNER JOIN medical_personnel ON medical_procedures.doctor_id = medical_personnel.id WHERE medical_procedures.id = ?');
             $query->bindParam(1,$procedure_id,PDO::PARAM_INT);
             $query->execute();
             return $query->fetch(PDO::FETCH_OBJ);
         }
         catch(PDOException $e){
-
+            echo  $e->getMessage();
         }
     }
 
