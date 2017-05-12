@@ -1,4 +1,17 @@
 <!doctype html>
+<?php
+
+require_once "../../database/DatabaseMySQL.php";
+require_once "../../models/Personal.php";
+
+session_start();
+
+$db = DatabaseMySQL::connect();
+
+$user = new Personal($db);
+$patients = $user->getAllPatients();
+
+?>
 <html lang="en">
 <head>
 
@@ -44,7 +57,7 @@
 
                 <ul class="nav">
                     <li class="active">
-                        <a href="dashboard.html">
+                        <a href="dashboard.php">
                             <i class="ti-panel"></i>
                             <p>Home</p>
                         </a>
@@ -77,7 +90,7 @@
                             <div class="card">
 
                                 <div class="header">
-                                    <h4 class="title">List of procedures</h4>
+                                    <h4 class="title">List of patients</h4>
                                     <br>
                                     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
                                 </div>
@@ -94,25 +107,27 @@
                                         <th>Action</th>
                                       </tr>
                                       
+                                      <?php foreach($patients as $patient){ ?>
                                       <tr>
-                                        <td>Hitler</td>
-                                        <td>Adolf</td>
-                                        <td>43</td>
-                                        <td>Jew </td>
-                                        <td>1.78 </td>
-                                        <td>80</td>
+                                        <td><?php echo($patient->last_name);?></td>
+                                        <td><?php echo($patient->name);?></td>
+                                        <td><?php echo($patient->age);?></td>
+                                        <td><?php echo($patient->gender);?> </td>
+                                        <td><?php echo($patient->height);?> </td>
+                                        <td><?php echo($patient->weight);?></td>
                                         <td>
-                                            <a href="edit_user.html" class="btn btn-info btn-fill btn-wd">Edit Profile</a>
-                                            <a href="create_procedure.html" class="btn btn-success btn-fill btn-wd">Add procedure</a>
-                                            <a href="procedures.html" class="btn btn-warning btn-fill btn-wd">Show procedures</a>
+                                            <a href="edit_user.php" class="btn btn-info btn-fill btn-wd">Edit Profile</a>
+                                            <a href="create_procedure.php" class="btn btn-success btn-fill btn-wd">Add procedure</a>
+                                            <a href="procedures.php" class="btn btn-warning btn-fill btn-wd">Show procedures</a>
                                         </td>
                                       </tr>
+                                      <?php } ?>
 
                                     </table>
                                 </div>
 
                             </div>
-                             <a href="create_user.html" class="btn btn-success btn-fill btn-wd">Add user</a>
+                             <a href="create_user.php" class="btn btn-success btn-fill btn-wd">Add user</a>
                         </div>
                     </div>
                 </div>
