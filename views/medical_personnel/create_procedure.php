@@ -99,7 +99,7 @@ $doctors = $user->getDoctorInfo();
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>ID</label>
-                                                <input type="text" class="form-control border-input" placeholder="Cause" name="patient_id">
+                                                <input type="text" class="form-control border-input" placeholder="Cause" name="patient_id" value="<?php echo($patient_id)?>">
                                             </div>
                                         </div>
                                     </div>

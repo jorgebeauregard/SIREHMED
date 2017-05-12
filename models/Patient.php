@@ -214,7 +214,7 @@ class Patient{
     public function getMedProceduresFromPatient($id_pat){
         try{
             $query = $this->mysql->prepare('SELECT *
-                                        FROM medical_procedures where patiend_id = ?;');
+                                        FROM medical_procedures where patient_id = ?;');
             $query->bindParam(1, $id_pat, PDO::PARAM_INT);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_OBJ);

@@ -1,4 +1,19 @@
 <!doctype html>
+<?php
+
+require_once "../../database/DatabaseMySQL.php";
+require_once "../../models/Patient.php";
+
+session_start();
+
+$db = DatabaseMySQL::connect();
+
+$user = new Patient($db);
+$patient_id = $_GET['id'];
+$procedures = $user->getMedProceduresFromPatient($patient_id);
+
+?>
+
 <html lang="en">
 <head>
 
@@ -90,14 +105,15 @@
                                         <th>Action</th>
                                       </tr>
                                       
+                                      <?php foreach($procedures as $procedure){?>
                                       <tr>
-                                        <td>Took an arrow to the knee</td>
-                                        <td>Consultation</td>
+                                        <td><?php echo($procedure->cause) ?></td>
+                                        <td><?php echo($procedure->procedure_type) ?></td>
                                         <td>
-                                            <a href="edit_procedure.php" class="btn btn-info btn-fill btn-wd">Edit</a>
+                                            <a href=<?php echo "edit_procedure.php?id=" . $procedure->id ?> class="btn btn-info btn-fill btn-wd">Edit</a>
                                         </td>
                                       </tr>
-
+                                      <?php } ?>
                                     </table>
                                 </div>
 

@@ -1,4 +1,19 @@
 <!doctype html>
+
+<?php
+require_once "../../database/DatabaseMySQL.php";
+require_once "../../models/Procedures.php";
+
+session_start();
+
+$db = DatabaseMySQL::connect();
+
+$thing = new Procedures($db);
+$procedure_id = $_GET['id'];
+$procedure = $thing->getProcedureInfo($procedure_id);
+
+?>
+
 <html lang="en">
 <head>
 	<meta charset="utf-8" />

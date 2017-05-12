@@ -26,7 +26,7 @@ class Procedures{
 
     public function save($patient_id,$cause,$procedure_type,$observations,$doctor_id,$date_realized){
         try{
-            $query = $this->mysql->prepare('INSERT INTO medical_procedures(patient_id,cause,procedure_type,observations, doctor_id,date_realized) values (?,?,?,?,?,=)');
+            $query = $this->mysql->prepare('INSERT INTO medical_procedures(patient_id,cause,procedure_type,observations, doctor_id,date_realized) values (?,?,?,?,?,?)');
             $query->bindParam(1,$patient_id     , PDO::PARAM_INT);
             $query->bindParam(2,$cause          , PDO::PARAM_STR);
             $query->bindParam(3,$procedure_type , PDO::PARAM_STR);
