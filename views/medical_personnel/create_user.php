@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -77,7 +78,7 @@
                                 <h4 class="title">Create a new patient</h4>
                             </div>
                             <div class="content">
-                                <form>
+                                <form action="save.php" method="POST">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">

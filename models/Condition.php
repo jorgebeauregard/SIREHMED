@@ -71,6 +71,7 @@ class Condition{
             echo  $e->getMessage();
         }
     }
+}
 ?>
 
 
