@@ -103,10 +103,24 @@ class Patient{
             echo $e->getMessage();
         }
     }
-
+    //Show list of conditions
     public function getMedicalConditionList(){
         try{
             $query = $this->mysql->prepare('SELECT condition_description,condition_type FROM medical_conditions WHERE patient_id = ?');
+            $query->bindParam(1,$this->id,PDO::PARAM_INT);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_OBJ);
+
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }
+    }
+
+    //Show medical procedures //Todo el procedure y nombre completo del doc, specialty
+    public function getMedicalProceduresList(){
+        try{
+            $query = $this->mysql->prepare('SELECT medical_procedures.cause, medical_procedures.procedure_type, medical_procedures.observations, CONCAT(medical_personnel.name,\' \', medical_personnel.last_name) AS name, medical_personnel.specialty FROM medical_procedures INNER JOIN medical_personnel ON medical_procedures.doctor_id = medical_personnel.id WHERE patient.id = ?');
             $query->bindParam(1,$this->id,PDO::PARAM_INT);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_OBJ);
