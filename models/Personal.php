@@ -111,6 +111,19 @@ class Personal{
             echo  $e->getMessage();
         }
     }
+
+    public function getDoctorInfo(){
+        try{
+            $query = $this->mysql->prepare('SELECT *
+                                        FROM medical_personnel;');
+            $query->execute();
+            return $query->fetch(PDO::FETCH_OBJ);
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }
+    }
+
 }
 ?>
 

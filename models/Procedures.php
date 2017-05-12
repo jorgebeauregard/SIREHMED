@@ -41,12 +41,35 @@ class Procedures{
         }
     }
 
-    public function update($patient_id,$cause,$procedure_type,$observations,$doctor_id,$date_realized){
+    public function update($id,$cause,$procedure_type,$observations,$doctor_id,$date_realized){
+        try{
+            $query = $this->mysql->prepare('UPDATE medical_procedures SET patient_id = ?,cause,procedure_type = ?,observations = ?, doctor_id = ?,date_realized = ?) WHERE id = ?');
+            
+            $query->bindParam(1,$cause          , PDO::PARAM_STR);
+            $query->bindParam(2,$procedure_type , PDO::PARAM_STR);
+            $query->bindParam(3,$observations   , PDO::PARAM_STR);
+            $query->bindParam(4,$doctor_id      , PDO::PARAM_INT);
+            $query->bindParam(5,$date_realized  , PDO::PARAM_STR);
+            $query->bindParam(6,$patient_id     , PDO::PARAM_INT);
 
+            $query->execute();
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }
     }
 
     public function delete(){
-        
+        try{
+            $query = $this->con->prepare('DELETE FROM medical_procedures WHERE id = ?');
+            $query->bindParam(1, $this->id, PDO::PARAM_INT);
+            $query->execute();
+            $this->con->close();
+            return true;
+        }
+        catch(PDOException $e){
+            echo  $e->getMessage();
+        }
     }
 ?>
 
