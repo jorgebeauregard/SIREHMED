@@ -16,8 +16,8 @@ class Personal{
     private $active;
 
 
-    public function __construct(Database $db){
-        $this->mysql = new $db;
+    public function __construct(PDO $db){
+        $this->mysql = $db;
     }
 
     public function setId($id){
