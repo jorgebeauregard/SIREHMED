@@ -41,16 +41,15 @@ class Procedures{
         }
     }
 
-    public function update($id,$cause,$procedure_type,$observations,$doctor_id,$date_realized){
+    public function update($id,$cause,$procedure_type,$observations,$date_realized){
         try{
-            $query = $this->mysql->prepare('UPDATE medical_procedures SET cause,procedure_type = ?,observations = ?, doctor_id = ?,date_realized = ?) WHERE id = ?');
+            $query = $this->mysql->prepare('UPDATE medical_procedures SET cause,procedure_type = ?,observations = ?,date_realized = ?) WHERE id = ?');
             
             $query->bindParam(1,$cause          , PDO::PARAM_STR);
             $query->bindParam(2,$procedure_type , PDO::PARAM_STR);
             $query->bindParam(3,$observations   , PDO::PARAM_STR);
-            $query->bindParam(4,$doctor_id      , PDO::PARAM_INT);
-            $query->bindParam(5,$date_realized  , PDO::PARAM_STR);
-            $query->bindParam(6,$patient_id     , PDO::PARAM_INT);
+            $query->bindParam(4,$date_realized  , PDO::PARAM_STR);
+            $query->bindParam(5,$patient_id     , PDO::PARAM_INT);
 
             $query->execute();
         }
