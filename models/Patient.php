@@ -53,7 +53,7 @@ class Patient{
         try{
 
             //First create user
-            $query = $this->mysql->prepate('');
+            $query = $this->mysql->prepare('');
 
 
             //Then create patient
