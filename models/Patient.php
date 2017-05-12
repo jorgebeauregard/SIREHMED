@@ -137,7 +137,7 @@ class Patient{
             $query = $this->mysql->prepare('SELECT medical_procedures.cause, medical_procedures.procedure_type, medical_procedures.observations,medical_procedures.date_realized, CONCAT(medical_personnel.name,\' \', medical_personnel.last_name) AS name, medical.medical_personnel.specialty FROM medical_procedures INNER JOIN medical_personnel ON medical_procedures.doctor_id = medical_personnel.id WHERE medical_procedures.id = ?');
             $query->bindParam(1,$procedure_id,PDO::PARAM_INT);
             $query->execute();
-            return $query->fetchAll(PDO::FETCH_OBJ);
+            return $query->fetch(PDO::FETCH_OBJ);
         }
         catch(PDOException $e){
 
