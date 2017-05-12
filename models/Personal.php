@@ -30,11 +30,14 @@ class Personal{
 
     public function save($n_email, $n_pwd, $n_permit,$n_name,$n_last_name,$n_specialty){
         try{
-            $query = $this->mysql->prepare('INSERT INTO users(email,password,permit) VALUES (?,?,?);');
+            $query = $this->mysql->prepare('CALL insertUser(?,?,?) ;');
             $query->bindParam(1,$n_email, PDO::PARAM_STR);
             $query->bindParam(2,$n_pwd, PDO::PARAM_STR);
             $query->bindParam(3,$n_permit, PDO::PARAM_INT);
             $query->execute();
+
+
+            
 
             $query = $this->mysql->prepare('SELECT id FROM users WHERE email = ?');
             $query->bindParam(1,$n_email,PDO::PARAM_STR);

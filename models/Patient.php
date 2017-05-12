@@ -53,7 +53,7 @@ class Patient{
         try{
 
             //First create user
-            $query = $this->mysql->prepare('INSERT INTO users(email,password,permit) VALUES (?,?,?);');
+            $query = $this->mysql->prepare('CALL insertUser(?,?,?) ;');
             $query->bindParam(1,$n_email, PDO::PARAM_STR);
             $query->bindParam(2,$n_pwd, PDO::PARAM_STR);
             $query->bindParam(3,$n_permit, PDO::PARAM_INT);
