@@ -24,8 +24,8 @@ class Patient{
     private $active;
 
 
-    public function __construct(Database $db){
-        $this->mysql = new $db;
+    public function __construct(PDO $db){
+        $this->mysql = $db;
     }
 
     public function setId($id){
@@ -35,12 +35,12 @@ class Patient{
     public function setEmail($email){
         $this->email = $email;
     }
-
+    //incomplete
     public function save($n_id, $n_email, $n_pwd, $n_permit,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone,$n_body_mass_index){
         try{
 
             //First create user
-            $query = $this->mysql->prepate('')
+            $query = $this->mysql->prepate('');
 
 
             //Then create patient
@@ -66,6 +66,7 @@ class Patient{
         }
     }
 
+    //Incomplete
     public function update($id,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone,$n_body_mass_index,$n_active){
         try{
 
@@ -83,7 +84,6 @@ class Patient{
             $query->bindParam(2,$this->id,PDO::PARAM_INT);
             $query->execute();
 
-            $this->mysql->close();
             return true;
         }
         catch(PDOException $e){
@@ -94,6 +94,10 @@ class Patient{
      public function get(){
         //name,last_name,birth_date,age,gender,bloodtype,emergency contact name, emergency contact phone, bmi, height, weight
         try{
+            $query = $this->mysql->prepare('SELECT * FROM patients WHERE id = ?');
+            $query->bindParam(1,$this->id,PDO::PARAM_INT);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_OBJ);
 
         }
         catch(PDOException $e) {
@@ -103,17 +107,17 @@ class Patient{
 
     public function getLogInInfo(){
         try{
-            $query = $this->con->prepare('SELECT *
+            $query = $this->mysql->prepare('SELECT *
                                         FROM users where users.email = ?;');
             $query->bindParam(1, $this->email, PDO::PARAM_STR);
             $query->execute();
-            $this->con->close();
             return $query->fetch(PDO::FETCH_OBJ);
         }
         catch(PDOException $e) {
             echo  $e->getMessage();
         }
     }
+}
 ?>
 
 
