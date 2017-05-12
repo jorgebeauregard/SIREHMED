@@ -1,11 +1,11 @@
 <?php
-class Condition{
+class Drug{
 	private $psql;
     private $mysql;
 
     //info
     private $id;
-  
+
 
     public function __construct(Database $db){
         $this->mysql = new $db;
