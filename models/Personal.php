@@ -3,9 +3,18 @@ class Personal{
 	private $psql;
     private $mysql;
 
-    //info
+    //user info
     private $id;
-  
+    private $email;
+    private $pwd;
+    private $permit;
+
+    //MEDICAL_PERSONNEL data
+    private $name;
+    private $last_name;
+    private $specialty;
+    private $active;
+
 
     public function __construct(Database $db){
         $this->mysql = new $db;
@@ -29,6 +38,18 @@ class Personal{
 
     public function delete(){
         
+    }
+
+    public function getAllPatients(){
+        //last name, name, age , gender, weight
+        try{
+            $query = $this->mysql->prepare('SELECT name,last_name, age,gender,weight, height FROM patients');
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_OBJ);
+        }
+        catch(PDOException $e){
+            echo  $e->getMessage();
+        }
     }
 ?>
 

@@ -48,12 +48,16 @@ class Patient{
             echo  $e->getMessage();
         }   
     }
-    //incomplete
-    public function save($n_id, $n_email, $n_pwd, $n_permit,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone,$n_body_mass_index){
+    //Done
+    public function save($n_email, $n_pwd, $n_permit,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone,$n_body_mass_index){
         try{
 
             //First create user
-            $query = $this->mysql->prepare('INSERT INTO users()');
+            $query = $this->mysql->prepare('INSERT INTO users(email,password,permit) VALUES (?,?,?);');
+            $query->bindParam(1,$n_email, PDO::PARAM_STR);
+            $query->bindParam(2,$n_pwd, PDO::PARAM_STR);
+            $query->bindParam(3,$n_permit, PDO::PARAM_INT);
+            $query->execute();
 
 
             //Then create patient
@@ -72,6 +76,7 @@ class Patient{
             $query->bindParam(10,$n_emergency_phone, PDO::PARAM_STR);
             $query->bindParam(11,$n_weight, PDO::PARAM_STR);
             $query->bindParam(11,$n_height, PDO::PARAM_STR);
+            $query->execute();
 
         }
         catch(PDOException $e) {
@@ -82,7 +87,26 @@ class Patient{
     //Incomplete
     public function update($id,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone,$n_body_mass_index,$n_active){
         try{
-
+            $query = $this->mysql->prepare('UPDATE patients SET 
+                name = ?,   last_name = ?,  age = ?,
+                height = ?, weight = ?,     gender = ?,
+                blood_type = ?, birth_date = ?, emergency_name = ?,
+                emergency_phone = ?, body_mass_index = setBodyMassIndex(?,?)
+            WHERE id = ?;');
+            $query->bindParam(1,$n_name, PDO::PARAM_STR);
+            $query->bindParam(2,$n_last_name, PDO::PARAM_STR);
+            $query->bindParam(3,$n_age, PDO::PARAM_INT);
+            $query->bindParam(4,$n_height, PDO::PARAM_STR);
+            $query->bindParam(5,$n_weight, PDO::PARAM_STR);
+            $query->bindParam(6,$n_gender, PDO::PARAM_STR);
+            $query->bindParam(7,$n_blood_type, PDO::PARAM_STR);
+            $query->bindParam(8,$n_birthdate, PDO::PARAM_STR);
+            $query->bindParam(9,$n_emergency_name, PDO::PARAM_STR);
+            $query->bindParam(10,$n_emergency_phone, PDO::PARAM_STR);
+            $query->bindParam(11,$n_weight, PDO::PARAM_STR);
+            $query->bindParam(12,$n_height, PDO::PARAM_STR);
+            $query->bindParam(13,$id, PDO::PARAM_INT);
+            $query->execute();
         }
         catch(PDOException $e) {
             echo  $e->getMessage();
