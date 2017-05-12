@@ -1,4 +1,21 @@
 <!doctype html>
+
+<?php
+
+require_once "../../database/DatabaseMySQL.php";
+require_once "../../models/Patient.php";
+
+session_start();
+
+$db = DatabaseMySQL::connect();
+$user = new Patient($db);
+$e=$_SESSION['email'];
+$id_obj = $user->getId($e);
+$user->setId($id_obj->id);
+$info_user = $user->get();
+
+?>
+
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -86,7 +103,7 @@
                             <div class="content">
                                 <div class="author">
                                   <img class="avatar border-white" src="../assets/img/faces/face-2.jpg" alt="..."/>
-                                  <h4 class="title">Chet Faker<br />
+                                  <h4 class="title"> <?php echo($info_user->name); echo(' ');echo($info_user->last_name);?> <br />
                                   </h4>
                                 </div>
                             </div>
@@ -157,13 +174,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="Company" value="Name">
+                                                <input type="text" class="form-control border-input" disabled placeholder="Company" value="<?php echo($info_user->name);?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="Last Name" value="Last Name">
+                                                <input type="text" class="form-control border-input" disabled placeholder="Last Name" value="<?php echo($info_user->last_name);?>">
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +189,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Birth Date</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="Company" value="Birth date">
+                                                <input type="text" class="form-control border-input" disabled placeholder="Company" value="<?php echo($info_user->birth_date);?>">
                                             </div>
                                         </div>
                                     </div>                                    
@@ -181,19 +198,19 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Age</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="Age">
+                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="<?php echo($info_user->age);?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Gender</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="Country" value="Gender">
+                                                <input type="text" class="form-control border-input" disabled placeholder="Country" value="<?php echo($info_user->gender);?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Blood Type</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="ZIP Code" value="Blood Type">
+                                                <input type="text" class="form-control border-input" disabled placeholder="ZIP Code" value="<?php echo($info_user->blood_type);?>">
                                             </div>
                                         </div>
                                     </div>
@@ -202,13 +219,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Emergency Contact Name</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="Emergency name">
+                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="<?php echo($info_user->emergency_name);?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Emergency Contact Phone</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="Country" value="Emergency phone">
+                                                <input type="text" class="form-control border-input" disabled placeholder="Country" value="<?php echo($info_user->emergency_phone);?>">
                                             </div>
                                         </div>
                                     </div>
@@ -217,19 +234,19 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Body Mass Index</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="Body Mass">
+                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="<?php echo($info_user->body_mass_index);?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Height</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="Height">
+                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="<?php echo($info_user->height);?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Weight</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="Weight">
+                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="<?php echo($info_user->weight);?>">
                                             </div>
                                         </div>                                        
                                     </div>                                    
