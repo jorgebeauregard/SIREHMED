@@ -35,6 +35,19 @@ class Patient{
     public function setEmail($email){
         $this->email = $email;
     }
+
+    public function getId($email){
+        try{
+            $query = $this->mysql->prepare('SELECT id FROM users WHERE email = ?');
+            $query->bindParam(1,$email,PDO::PARAM_STR);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_OBJ);
+
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }   
+    }
     //incomplete
     public function save($n_id, $n_email, $n_pwd, $n_permit,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone,$n_body_mass_index){
         try{
