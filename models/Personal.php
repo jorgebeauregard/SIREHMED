@@ -114,8 +114,7 @@ class Personal{
 
     public function getDoctorInfo(){
         try{
-            $query = $this->mysql->prepare('SELECT *
-                                        FROM medical_personnel;');
+            $query = $this->mysql->prepare('SELECT CONCAT(medical_personnel.name, \' \', medical_personnel.last_name) as name, specialty  FROM medical_personnel;');
             $query->execute();
             return $query->fetch(PDO::FETCH_OBJ);
         }

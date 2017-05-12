@@ -43,7 +43,7 @@ class Procedures{
 
     public function update($id,$cause,$procedure_type,$observations,$doctor_id,$date_realized){
         try{
-            $query = $this->mysql->prepare('UPDATE medical_procedures SET patient_id = ?,cause,procedure_type = ?,observations = ?, doctor_id = ?,date_realized = ?) WHERE id = ?');
+            $query = $this->mysql->prepare('UPDATE medical_procedures SET cause,procedure_type = ?,observations = ?, doctor_id = ?,date_realized = ?) WHERE id = ?');
             
             $query->bindParam(1,$cause          , PDO::PARAM_STR);
             $query->bindParam(2,$procedure_type , PDO::PARAM_STR);
