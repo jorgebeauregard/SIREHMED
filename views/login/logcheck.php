@@ -30,7 +30,7 @@ $usertype = $user->getLogInInfo();
                     header("location:../student/index.php");
                 }
                 else if($usertype->permit==1){
-                    header("location:../patient/dashboard.html");
+                    header("location:../patient/dashboard.php");
                 }
                 else{
                     header("location:../medical_personnel/dashboard.php");

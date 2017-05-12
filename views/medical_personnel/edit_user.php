@@ -163,7 +163,7 @@ $conditions = $thing->get((int)$_GET['id']);
                         <h4 class="title">Edit an existing patient</h4>
                     </div>
                     <div class="content">
-                        <form action="update.php" method="POST">
+                        <form action="update_patient.php" method="POST">
                             <div class="row hidden">                            
                                 <div class="col-md-6">
                                     <div class="form-group">

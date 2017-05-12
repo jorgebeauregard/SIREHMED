@@ -1,3 +1,8 @@
+INSERT INTO users(id, email, password, permit) VALUES(1,'jorgebeauregard@outlook.com','secret',1);
+
+insert into patients values(1,'Jorge','Beauregard',10,10.0,10.0,'masculine','O-','2010/10/10','ju','2222222222',0.0,'true');
+
+
 INSERT INTO users(id, email, password, permit) VALUES(2,'fany@gmail.com','secret',2);
 
 INSERT INTO medical_personnel(id, name, last_name, specialty, active) VALUES(2,"Fany","Pitol","Proctologa",TRUE);

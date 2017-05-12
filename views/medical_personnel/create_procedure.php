@@ -1,4 +1,20 @@
 <!doctype html>
+<?php
+require_once "../../database/DatabaseMySQL.php";
+require_once "../../models/Personal.php";
+require_once "../../models/Condition.php";
+
+
+session_start();
+
+$db = DatabaseMySQL::connect();
+$patient_id = $_GET['id'];
+$user = new Personal($db);
+$doctors = $user->getDoctorInfo();
+
+?>
+
+
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -77,20 +93,31 @@
                                 <h4 class="title">Add a procedure for a patient</h4>
                             </div>
                             <div class="content">
-                                <form>
+                                <form action="save_procedure.php" method="POST">
+
+                                    <div class="row hidden">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>ID</label>
+                                                <input type="text" class="form-control border-input" placeholder="Cause" name="patient_id">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Cause</label>
-                                                <input type="text" class="form-control border-input" placeholder="Cause">
+                                                <input type="text" class="form-control border-input" placeholder="Cause" name="cause">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                             <label>Type</label>
                                                 <select name="procedure_type" class="form-control border-input">
-                                                    <option value="O-">Operation</option>
-                                                    <option value="O+">Consultation</option>
+                                                    <option value="operation">Operation</option>
+                                                    <option value="consultation">Consultation</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -99,7 +126,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label>Observations</label>
-                                            <textarea rows="5" class="form-control border-input" placeholder="Doctor's observations"></textarea>
+                                            <textarea rows="5" class="form-control border-input" placeholder="Doctor's observations" name="observations"></textarea>
                                         </div>
                                     </div>                                    
 
@@ -107,19 +134,21 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Date</label>
-                                                <input type="date" class="form-control border-input">
+                                                <input type="date" class="form-control border-input" name="date_realized">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Doctor</label>
                                                 <select name="doctor_id" class="form-control border-input">
-                                                    <option value="doctor_id">Doctor's name</option>
+                                                    <?php foreach($doctors as $doctor){ ?>
+                                                    <option value="<?php echo($doctor->id)?>"><?php echo($doctor->name)?></option>
+                                                    <?php } ?>
                                                 </select>                                            
                                             </div>
                                         </div>
                                     </div>                                  
-
+                                        <button type="submit" class="btn btn-info btn-fill btn-wd">Create procedure</button>
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
@@ -128,7 +157,6 @@
 
                         </div>
 
-                         <button type="submit" class="btn btn-info btn-fill btn-wd">Create procedure</button>
                     </div>
 
 

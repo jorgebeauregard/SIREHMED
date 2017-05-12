@@ -117,7 +117,7 @@ $patients = $user->getAllPatients();
                                         <td><?php echo($patient->weight);?></td>
                                         <td>
                                             <a href=<?php echo "edit_user.php?id=" . $patient->id ?> class="btn btn-info btn-fill btn-wd">Edit Profile</a>
-                                            <a href="create_procedure.php" class="btn btn-success btn-fill btn-wd">Add procedure</a>
+                                            <a href=<?php echo "create_procedure.php?id=" . $patient->id ?> class="btn btn-success btn-fill btn-wd">Add procedure</a>
                                             <a href="procedures.php" class="btn btn-warning btn-fill btn-wd">Show procedures</a>
                                         </td>
                                       </tr>

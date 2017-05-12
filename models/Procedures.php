@@ -71,6 +71,7 @@ class Procedures{
             echo  $e->getMessage();
         }
     }
+}
 ?>
 
 
