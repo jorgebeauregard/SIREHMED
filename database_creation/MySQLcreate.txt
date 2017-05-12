@@ -1,26 +1,137 @@
-create table medical_condition_drugs(
-	id int not null auto_increment primary key,
-	medical_condition_id int not null,
-	drug varchar(50) not null
+PSQL to MYSQL
+
+
+CREATE DATABASE sirehmed_psql;
+
+CREATE TYPE gender AS ENUM('masculine','femenine');
+CREATE TYPE blood_type AS ENUM('O-','O+','B-','B+','A-','A+','AB-','AB+');
+CREATE TYPE condition_type AS ENUM('allergy','suffering');
+CREATE TYPE procedure_type AS ENUM('operation','consultation');
+
+
+
+CREATE TABLE users(
+	id int AUTO_INCREMENT NOT NULL,
+	email varchar(100) NOT NULL,
+	password varchar(25) NOT NULL,
+	permit int NOT NULL,
+	PRIMARY KEY (id),
+	CONSTRAINT PWD_length CHECK (char_length(password) > 6) 
 );
 
-create table medical_procedure_drugs(
-	id int not null auto_increment primary key,
-	medical_procedure_id int not null,
-	drug varchar(50) not null
+
+
+
+CREATE TABLE patients(
+	id int NOT NULL,
+	name varchar(60) NOT NULL,
+	last_name varchar(60) NOT NULL,
+	age int NOT NULL,
+	height float NOT NULL,
+	weight float NOT NULL,
+	gender ENUM('masculine','femenine') NOT NULL,
+	blood_type ENUM('O-','O+','B-','B+','A-','A+','AB-','AB+') NOT NULL,
+	birth_date date NOT NULL,
+	emergency_name varchar(120),
+	emergency_phone varchar(10),
+	body_mass_index float,
+	active tinyint DEFAULT TRUE,
+	PRIMARY KEY(id),
+	FOREIGN KEY (id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
-create table height (
-	id int not null auto_increment primary key,
-	id_user int not null,
-	height_val int not null,
-	date_recorded date not null
+-- Weight is in kg
+-- Height in m
+
+
+
+
+CREATE TABLE medical_personnel(
+	id int NOT NULL,
+	name varchar(60) NOT NULL,
+	last_name varchar(60) NOT NULL,
+	specialty varchar(60) NOT NULL,
+	active tinyint DEFAULT TRUE,
+	PRIMARY KEY(id),
+	FOREIGN KEY (id) REFERENCES users(id) ON UPDATE cascade ON DELETE CASCADE
 );
 
-create table weight (
-	id int not null auto_increment primary key,
-	id_user int not null,
-	weight_val float not null,
-	date_recorded date not null
+CREATE TABLE medical_conditions(
+	id int NOT NULL,
+	patient_id int NOT NULL,
+	condition_description varchar(60) NOT NULL,
+	condition_type ENUM('allergy','suffering') NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(patient_id) REFERENCES patients(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE medical_procedures(
+	id int  NOT NULL,
+	patient_id int NOT NULL,
+	cause varchar(255) NOT NULL,
+	procedure_type ENUM('operation','consultation') NOT NULL,
+	observations varchar(255),
+	doctor_id int NOT NULL,
+	date_realized date NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY (patient_id) REFERENCES patients(id) 			ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (doctor_id)  REFERENCES medical_personnel(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- insert into patients values(5,'hola','mundo',10,10.0,10.0,'masculine','O-','2010/10/10','ju','2222222222',0.0,'true');
+-- insert into users(email,password,permit) values('as','ss',0);
+--insert into patients(body_mass_index) values (getBodyMassIndex(10.0,2.0)) where id = 5;
+--update patients set body_mass_index = getBodyMassIndex(10.0,2.0) where id = 5;
+
+Constraint: Listo
+Function: Listo
+View: Listo
+Trigger: Listo
+Stored procedure y transaction: Listo
+
+Function: 
+DELIMITER $$
+	CREATE FUNCTION setBodyMassIndex(weight double, height double) returns double DETERMINISTIC
+	BEGIN
+		RETURN(weight/(height*height));
+	END$$
+DELIMITER ;
+
+
+
+
+View: show all fucking users
+	CREATE VIEW patient_info AS 
+		select	
+			CONCAT(patients.name,' ',patients.last_name) as name,
+			patients.age as age,
+			patients.gender as gender
+		from patients;
+	To call: select * from patients_info;
+		 
+ 
+	
+Trigger: modify body_mass index
+	DELIMITER $$
+	CREATE TRIGGER after_user_insert
+		AFTER INSERT on patients
+		FOR EACH ROW
+	BEGIN
+		UPDATE patients
+		SET body_mass_index = setBodyMassIndex(new.weight,new.height);
+	END $$
+	DELIMITER ;
+
+
+Stored procedure && transaction
+DELIMITER $$
+CREATE PROCEDURE insertUser(IN n_email varchar(100), IN n_password varchar(25), IN n_permit int)
+BEGIN 
+    START TRANSACTION;
+    	INSERT INTO users(email, password,permit) values (n_email,n_password,n_permit);
+    COMMIT;
+END $$
+DELIMITER ;
+
+How to call: CALL insertUser(?,?,?);
+  
