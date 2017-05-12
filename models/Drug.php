@@ -20,7 +20,7 @@ class Drug{
     }
 
     public function save(){
-
+        
     }
 
     public function update($medical_condition_id,$n_drug, $n_description){

@@ -5,25 +5,43 @@ class Procedures{
 
     //info
     private $id;
-     
+    private $patient_id;
+    private $cause;
+    private $procedure_type;
+    private $observations;
+    private $doctor_id;
+    private $date_realized;
 
-    public function __construct(Database $db){
-        $this->mysql = new $db;
+    public function __construct(PDO $db){
+        $this->mysql = $db;
     }
 
     public function setId($id){
         $this->id = $id;
     }
 
-    public function save(){
-
-    }
-
     public function get(){
 
     }
 
-    public function update(){
+    public function save($patient_id,$cause,$procedure_type,$observations,$doctor_id,$date_realized){
+        try{
+            $query = $this->mysql->prepare('INSERT INTO medical_procedures(patient_id,cause,procedure_type,observations, doctor_id,date_realized) values (?,?,?,?,?,=)');
+            $query->bindParam(1,$patient_id     , PDO::PARAM_INT);
+            $query->bindParam(2,$cause          , PDO::PARAM_STR);
+            $query->bindParam(3,$procedure_type , PDO::PARAM_STR);
+            $query->bindParam(4,$observations   , PDO::PARAM_STR);
+            $query->bindParam(5,$doctor_id      , PDO::PARAM_INT);
+            $query->bindParam(6,$date_realized  , PDO::PARAM_STR);
+
+            $query->execute();
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }
+    }
+
+    public function update($patient_id,$cause,$procedure_type,$observations,$doctor_id,$date_realized){
 
     }
 
