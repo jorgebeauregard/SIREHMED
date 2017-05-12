@@ -36,12 +36,23 @@ class Patient{
         $this->email = $email;
     }
 
+    public function getId($email){
+        try{
+            $query = $this->mysql->prepare('SELECT id FROM users WHERE email = ?');
+            $query->bindParam(1,$email,PDO::PARAM_STR);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_OBJ);
+
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }   
+    }
+    //incomplete
     public function save($n_id, $n_email, $n_pwd, $n_permit,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone,$n_body_mass_index){
         try{
 
-            //First create user
             $query = $this->mysql->prepare('');
-
 
             //Then create patient
             $query = $this->mysql->prepare('INSERT INTO patients(
@@ -66,6 +77,7 @@ class Patient{
         }
     }
 
+    //Incomplete
     public function update($id,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone,$n_body_mass_index,$n_active){
         try{
 
@@ -83,7 +95,6 @@ class Patient{
             $query->bindParam(2,$this->id,PDO::PARAM_INT);
             $query->execute();
 
-            $this->mysql->close();
             return true;
         }
         catch(PDOException $e){
@@ -94,6 +105,10 @@ class Patient{
      public function get(){
         //name,last_name,birth_date,age,gender,bloodtype,emergency contact name, emergency contact phone, bmi, height, weight
         try{
+            $query = $this->mysql->prepare('SELECT * FROM patients WHERE id = ?');
+            $query->bindParam(1,$this->id,PDO::PARAM_INT);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_OBJ);
 
         }
         catch(PDOException $e) {
@@ -114,4 +129,10 @@ class Patient{
         }
     }
 }
+<<<<<<< HEAD
 ?>
+=======
+?>
+
+
+>>>>>>> 89754d4cea1401424ab5cca0deb7dcf1e965b89b
