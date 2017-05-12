@@ -116,7 +116,7 @@ class Personal{
         try{
             $query = $this->mysql->prepare('SELECT CONCAT(medical_personnel.name, \' \', medical_personnel.last_name) as name, specialty  FROM medical_personnel;');
             $query->execute();
-            return $query->fetch(PDO::FETCH_OBJ);
+            return $query->fetchAll(PDO::FETCH_OBJ);
         }
         catch(PDOException $e) {
             echo  $e->getMessage();
