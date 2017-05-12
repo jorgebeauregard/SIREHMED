@@ -28,8 +28,32 @@ class Personal{
 
     }
 
-    public function save(){
+    public function save($n_email, $n_pwd, $n_permit,$n_name,$n_last_name,$n_specialty){
+        try{
+            $query = $this->mysql->prepare('INSERT INTO users(email,password,permit) VALUES (?,?,?);');
+            $query->bindParam(1,$n_email, PDO::PARAM_STR);
+            $query->bindParam(2,$n_pwd, PDO::PARAM_STR);
+            $query->bindParam(3,$n_permit, PDO::PARAM_INT);
+            $query->execute();
 
+            $query = $this->mysql->prepare('SELECT id FROM users WHERE email = ?');
+            $query->bindParam(1,$n_email,PDO::PARAM_STR);
+            $query->execute();
+            $query_obj = $query->fetch(PDO::FETCH_OBJ);
+
+            $id = $query_obj->id;
+
+            $query = $this->mysql->prepare('INSERT INTO medical_personnel(id,name,last_name,specialty) values (?,?,?,?');
+
+            $query->bindParam(1,$id,PDO::PARAM_INT);
+            $query->bindParam(2,$n_name,PDO::PARAM_STR);
+            $query->bindParam(3,$n_last_name,PDO::PARAM_STR);
+            $query->bindParam(4,$n_specialty,PDO::PARAM_STR);
+            $query->execute();
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }
     }
 
     public function update($id,$n_name,$n_last_name,$n_specialty){

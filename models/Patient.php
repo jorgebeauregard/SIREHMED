@@ -210,6 +210,18 @@ class Patient{
             echo  $e->getMessage();
         }
     }
+    public function getUserInfo($id){
+        try{
+            $query = $this->mysql->prepare('SELECT *
+                                        FROM users where users.id = ?;');
+            $query->bindParam(1, $id, PDO::PARAM_INT);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_OBJ);
+        }
+        catch(PDOException $e) {
+            echo  $e->getMessage();
+        }
+    }
 }
 
 ?>
