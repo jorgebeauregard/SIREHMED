@@ -59,23 +59,30 @@ class Patient{
             $query->bindParam(3,$n_permit, PDO::PARAM_INT);
             $query->execute();
 
+            $query = $this->mysql->prepare('SELECT id FROM users WHERE email = ?');
+            $query->bindParam(1,$n_email,PDO::PARAM_STR);
+            $query->execute();
+            $query_obj = $query->fetch(PDO::FETCH_OBJ);
+
+            $id = $query_obj->id;
 
             //Then create patient
-            $query = $this->mysql->prepare('INSERT INTO patients(
+            $query = $this->mysql->prepare('INSERT INTO patients(id,
                 name,last_name,age,height,weight,gender,blood_type,birth_date,
-                emergency_name,emergency_phone,body_mass_index) VALUES (?,?,?,?,?,?,?,?,?,?,setBodyMassIndex(?,?))');
-            $query->bindParam(1,$n_name, PDO::PARAM_STR);
-            $query->bindParam(2,$n_last_name, PDO::PARAM_STR);
-            $query->bindParam(3,$n_age, PDO::PARAM_INT);
-            $query->bindParam(4,$n_height, PDO::PARAM_STR);
-            $query->bindParam(5,$n_weight, PDO::PARAM_STR);
-            $query->bindParam(6,$n_gender, PDO::PARAM_STR);
-            $query->bindParam(7,$n_blood_type, PDO::PARAM_STR);
-            $query->bindParam(8,$n_birthdate, PDO::PARAM_STR);
-            $query->bindParam(9,$n_emergency_name, PDO::PARAM_STR);
-            $query->bindParam(10,$n_emergency_phone, PDO::PARAM_STR);
-            $query->bindParam(11,$n_weight, PDO::PARAM_STR);
-            $query->bindParam(11,$n_height, PDO::PARAM_STR);
+                emergency_name,emergency_phone,body_mass_index) VALUES (?,?,?,?,?,?,?,?,?,?,?,setBodyMassIndex(?,?))');
+            $query->bindParam(1,$id, PDO::PARAM_INT);
+            $query->bindParam(2,$n_name, PDO::PARAM_STR);
+            $query->bindParam(3,$n_last_name, PDO::PARAM_STR);
+            $query->bindParam(4,$n_age, PDO::PARAM_INT);
+            $query->bindParam(5,$n_height, PDO::PARAM_STR);
+            $query->bindParam(6,$n_weight, PDO::PARAM_STR);
+            $query->bindParam(7,$n_gender, PDO::PARAM_STR);
+            $query->bindParam(8,$n_blood_type, PDO::PARAM_STR);
+            $query->bindParam(9,$n_birthdate, PDO::PARAM_STR);
+            $query->bindParam(10,$n_emergency_name, PDO::PARAM_STR);
+            $query->bindParam(11,$n_emergency_phone, PDO::PARAM_STR);
+            $query->bindParam(12,$n_weight, PDO::PARAM_STR);
+            $query->bindParam(13,$n_height, PDO::PARAM_STR);
             $query->execute();
 
         }

@@ -24,6 +24,8 @@ class Personal{
         $this->id = $id;
     }
 
+    
+
     public function save(){
 
     }
