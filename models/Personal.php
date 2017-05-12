@@ -51,6 +51,7 @@ class Personal{
             echo  $e->getMessage();
         }
     }
+}
 ?>
 
 

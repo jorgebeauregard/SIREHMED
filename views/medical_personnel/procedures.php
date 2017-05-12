@@ -44,7 +44,7 @@
 
                 <ul class="nav">
                     <li class="active">
-                        <a href="dashboard.html">
+                        <a href="dashboard.php">
                             <i class="ti-panel"></i>
                             <p>Home</p>
                         </a>
@@ -94,7 +94,7 @@
                                         <td>Took an arrow to the knee</td>
                                         <td>Consultation</td>
                                         <td>
-                                            <a href="edit_procedure.html" class="btn btn-info btn-fill btn-wd">Edit</a>
+                                            <a href="edit_procedure.php" class="btn btn-info btn-fill btn-wd">Edit</a>
                                         </td>
                                       </tr>
 
@@ -102,7 +102,7 @@
                                 </div>
 
                             </div>
-                             <a href="create_procedure.html" class="btn btn-success btn-fill btn-wd">Add procedure</a>
+                             <a href="create_procedure.php" class="btn btn-success btn-fill btn-wd">Add procedure</a>
                         </div>
                     </div>
                 </div>

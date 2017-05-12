@@ -33,7 +33,7 @@ $usertype = $user->getLogInInfo();
                     header("location:../patient/dashboard.html");
                 }
                 else{
-                    header("location:../admin/index.php");
+                    header("location:../medical_personnel/dashboard.php");
                 }
             }
             else{

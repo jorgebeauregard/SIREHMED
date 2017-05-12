@@ -43,7 +43,7 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="dashboard.html">
+                    <a href="dashboard.php">
                         <i class="ti-panel"></i>
                         <p>Home</p>
                     </a>
