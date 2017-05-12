@@ -2,13 +2,13 @@
 
 <?php
 require_once "../../database/DatabaseMySQL.php";
-require_once "../../models/Procedures.php";
+require_once "../../models/Patient.php";
 
 session_start();
 
 $db = DatabaseMySQL::connect();
 
-$thing = new Procedures($db);
+$thing = new Patient($db);
 $procedure_id = $_GET['id'];
 $procedure = $thing->getProcedureInfo($procedure_id);
 
@@ -163,18 +163,28 @@ $procedure = $thing->getProcedureInfo($procedure_id);
                                 <h4 class="title">Procedure Information</h4>
                             </div>
                             <div class="content">
-                                <form>
+                                <form action="update_procedure.php" method="POST">
+
+                                    <div class="row hidden">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Cause</label>
+                                                <input type="text" class="form-control border-input" placeholder="Company" value="<?php echo($procedure_id)?>" name="procedure_id">
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Cause</label>
-                                                <input type="text" class="form-control border-input" placeholder="Company" value="Cause">
+                                                <input type="text" class="form-control border-input" placeholder="Company" value="<?php echo($procedure->cause)?>" name="cause">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Type</label>
-                                                <input type="text" class="form-control border-input" placeholder="Last Name" value="Type">
+                                                <input type="text" class="form-control border-input" placeholder="Last Name" value="<?php echo($procedure->procedure_type)?>" name="procedure_type">
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +192,7 @@ $procedure = $thing->getProcedureInfo($procedure_id);
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label>Observations</label>
-                                            <textarea rows="5" class="form-control border-input" placeholder="Here can be your description">Observations</textarea>
+                                            <textarea rows="5" class="form-control border-input" placeholder="Here can be your description" name="observations"><?php echo($procedure->observations)?></textarea>
                                         </div>
                                     </div>                                    
 
@@ -190,7 +200,7 @@ $procedure = $thing->getProcedureInfo($procedure_id);
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Date</label>
-                                                <input type="date" class="form-control border-input" placeholder="City" value="Doctor">
+                                                <input type="date" class="form-control border-input" placeholder="City" value="<?php echo($procedure->date_realized)?>" name="date_realized">
                                             </div>
                                         </div>
                                     </div>                                  
