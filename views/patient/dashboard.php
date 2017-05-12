@@ -63,13 +63,13 @@ $procedures = $user->getMedicalProceduresList();
 
                 <ul class="nav">
                     <li class="active">
-                        <a href="dashboard.html">
+                        <a href="dashboard.php">
                             <i class="ti-panel"></i>
                             <p>Home</p>
                         </a>
                     </li>
                     <li>
-                        <a href="profile.html">
+                        <a href="profile.php">
                             <i class="ti-user"></i>
                             <p>User Profile</p>
                         </a>
@@ -119,7 +119,7 @@ $procedures = $user->getMedicalProceduresList();
                                         <hr />
                                         <br>
                                         <div>
-                                            <a href="procedure.html" class="btn btn-info btn-fill btn-wd">More information</a>
+                                            <a class="btn btn-info btn-fill btn-wd" href= <?php echo "procedure.php?id=".$procedure->id ?> >More information</a>
                                         </div>
                                     </div>
                                 </div>

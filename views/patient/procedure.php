@@ -1,4 +1,19 @@
 <!doctype html>
+
+<?php
+require_once "../../database/DatabaseMySQL.php";
+require_once "../../models/Patient.php";
+
+session_start();
+
+$db = DatabaseMySQL::connect();
+
+$user = new Patient($db);
+$procedure = $user->showMedicalProcedure((int)$_GET['id']);
+$medicines = $user->getDrugsFromProcedure((int)$_GET['id']);
+
+?>
+
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -43,13 +58,13 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="dashboard.html">
+                    <a href="dashboard.php">
                         <i class="ti-panel"></i>
                         <p>Home</p>
                     </a>
                 </li>
                 <li>
-                    <a href="profile.html">
+                    <a href="profile.php">
                         <i class="ti-user"></i>
                         <p>User Profile</p>
                     </a>
@@ -85,30 +100,15 @@
                             </div>
                             <div class="content">
                                 <ul class="list-unstyled team-members">
-                                            <li>
-                                                <div class="row">
-
-                                                    <div class="col-xs-9">
-                                                        Medicine 1
-                                                    </div>
-                                                </div>
-                                            </li>
-
+                                        <?php foreach($medicines as $medicine){ ?>
                                             <li>
                                                 <div class="row">
                                                     <div class="col-xs-9">
-                                                        Medicine 2                                                         
+                                                        <?php echo($medicine->drug); ?>
                                                     </div>
                                                 </div>
                                             </li>
-
-                                            <li>
-                                                <div class="row">
-                                                    <div class="col-xs-9">
-                                                        Medicine 3              
-                                                    </div>
-                                                </div>
-                                            </li>
+                                        <?php } ?>
                                         </ul>
                             </div>
                         </div>
@@ -125,13 +125,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Cause</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="Company" value="Cause">
+                                                <input type="text" class="form-control border-input" disabled placeholder="Company" value="<?php echo($procedure->cause);?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Type</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="Last Name" value="Type">
+                                                <input type="text" class="form-control border-input" disabled placeholder="Last Name" value="<?php echo($procedure->procedure_type);?>">
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label>Observations</label>
-                                            <textarea rows="5" class="form-control border-input" disabled placeholder="Here can be your description">Observations</textarea>
+                                            <textarea rows="5" class="form-control border-input" disabled placeholder="Here can be your description"><?php echo($procedure->observations);?></textarea>
                                         </div>
                                     </div>                                    
 
@@ -147,13 +147,13 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Doctor</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="Doctor">
+                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="<?php echo($procedure->name);?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Doctor's Specialty</label>
-                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="Doctor's Specialty">
+                                                <input type="text" class="form-control border-input" disabled placeholder="City" value="<?php echo($procedure->specialty);?>">
                                             </div>
                                         </div>
                                     </div>                                  

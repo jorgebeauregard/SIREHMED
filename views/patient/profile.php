@@ -63,13 +63,13 @@ $conditions = $user->getMedicalConditionList();
 
             <ul class="nav">
                 <li>
-                    <a href="dashboard.html">
+                    <a href="dashboard.php">
                         <i class="ti-panel"></i>
                         <p>Home</p>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="profile.html">
+                    <a href="profile.php">
                         <i class="ti-user"></i>
                         <p>User Profile</p>
                     </a>
