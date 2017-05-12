@@ -24,22 +24,31 @@ class Personal{
         $this->id = $id;
     }
 
-    
+    public function get(){
+
+    }
 
     public function save(){
 
     }
 
-    public function get(){
-
-    }
-
-    public function update(){
+    public function update($id,$n_name,$n_last_name,$n_specialty){
 
     }
 
     public function delete(){
-        
+        try{
+            //set to passive
+            $query = $this->mysql->prepare('UPDATE patients SET active = ? WHERE id = ?');
+            $query->bindParam(1,0,PDO::PARAM_INT);
+            $query->bindParam(2,$this->id,PDO::PARAM_INT);
+            $query->execute();
+
+            return true;
+        }
+        catch(PDOException $e){
+            echo $e->getMessage();
+        }
     }
 
     public function getAllPatients(){

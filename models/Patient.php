@@ -92,14 +92,14 @@ class Patient{
     }
 
     //Incomplete
-    public function update($id,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone,$n_body_mass_index,$n_active){
+    public function update($id,$n_name,$n_last_name,$n_age,$n_height,$n_weight,$n_gender,$n_blood_type,$n_birthdate,$n_emergency_name,$n_emergency_phone){
         try{
             $query = $this->mysql->prepare('UPDATE patients SET 
                 name = ?,   last_name = ?,  age = ?,
                 height = ?, weight = ?,     gender = ?,
                 blood_type = ?, birth_date = ?, emergency_name = ?,
                 emergency_phone = ?, body_mass_index = setBodyMassIndex(?,?)
-            WHERE id = ?;');
+            WHERE id = ?');
             $query->bindParam(1,$n_name, PDO::PARAM_STR);
             $query->bindParam(2,$n_last_name, PDO::PARAM_STR);
             $query->bindParam(3,$n_age, PDO::PARAM_INT);
