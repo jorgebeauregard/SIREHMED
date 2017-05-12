@@ -53,7 +53,7 @@ class Patient{
         try{
 
             //First create user
-            $query = $this->mysql->prepare('');
+            $query = $this->mysql->prepare('INSERT INTO users()');
 
 
             //Then create patient
@@ -116,7 +116,6 @@ class Patient{
             echo  $e->getMessage();
         }
     }
-
     //Show medical procedures //Todo el procedure y nombre completo del doc, specialty
     public function getMedicalProceduresList(){
         try{
@@ -130,7 +129,6 @@ class Patient{
             echo  $e->getMessage();
         }
     }
-
     //Show procedure based on id of it
     public function showMedicalProcedure($procedure_id){
         try{
@@ -143,20 +141,18 @@ class Patient{
             echo  $e->getMessage();
         }
     }
-
-
+    //Show drugs from procedure
     public function getDrugsFromProcedure($procedure_id){
         try{
             $query = $this->mysql->prepare('SELECT * FROM medical_procedure_drugs WHERE medical_procedure_id = ?');
             $query->bindParam(1,$procedure_id,PDO::PARAM_INT);
             $query->execute();
-            return $query->fetch(PDO::FETCH_OBJ);
+            return $query->fetchAll(PDO::FETCH_OBJ);
         }
         catch(PDOException $e){
             echo  $e->getMessage();
         }
     }
-
     //Profile view
     public function get(){
         try{
