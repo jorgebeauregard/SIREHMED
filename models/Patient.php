@@ -24,8 +24,8 @@ class Patient{
     private $active;
 
 
-    public function __construct(Database $db){
-        $this->mysql = new $db;
+    public function __construct(PDO $db){
+        $this->mysql = $db;
     }
 
     public function setId($id){
@@ -40,7 +40,7 @@ class Patient{
         try{
 
             //First create user
-            $query = $this->mysql->prepate('')
+            $query = $this->mysql->prepare('');
 
 
             //Then create patient
@@ -103,17 +103,15 @@ class Patient{
 
     public function getLogInInfo(){
         try{
-            $query = $this->con->prepare('SELECT *
+            $query = $this->mysql->prepare('SELECT *
                                         FROM users where users.email = ?;');
             $query->bindParam(1, $this->email, PDO::PARAM_STR);
             $query->execute();
-            $this->con->close();
             return $query->fetch(PDO::FETCH_OBJ);
         }
         catch(PDOException $e) {
             echo  $e->getMessage();
         }
     }
+}
 ?>
-
-
