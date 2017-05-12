@@ -144,6 +144,19 @@ class Patient{
         }
     }
 
+
+    public function getDrugsFromProcedure($procedure_id){
+        try{
+            $query = $this->mysql->prepare('SELECT * FROM medical_procedure_drugs WHERE medical_procedure_id = ?');
+            $query->bindParam(1,$procedure_id,PDO::PARAM_INT);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_OBJ);
+        }
+        catch(PDOException $e){
+            echo  $e->getMessage();
+        }
+    }
+
     //Profile view
     public function get(){
         try{
