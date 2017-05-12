@@ -40,12 +40,6 @@ CREATE TABLE patients(
 	FOREIGN KEY (id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
--- Weight is in kg
--- Height in m
-
-
-
-
 CREATE TABLE medical_personnel(
 	id int NOT NULL,
 	name varchar(60) NOT NULL,
@@ -57,7 +51,7 @@ CREATE TABLE medical_personnel(
 );
 
 CREATE TABLE medical_conditions(
-	id int NOT NULL,
+	id int AUTO_INCREMENT NOT NULL,
 	patient_id int NOT NULL,
 	condition_description varchar(60) NOT NULL,
 	condition_type ENUM('allergy','suffering') NOT NULL,
@@ -66,7 +60,7 @@ CREATE TABLE medical_conditions(
 );
 
 CREATE TABLE medical_procedures(
-	id int  NOT NULL,
+	id int AUTO_INCREMENT NOT NULL,
 	patient_id int NOT NULL,
 	cause varchar(255) NOT NULL,
 	procedure_type ENUM('operation','consultation') NOT NULL,
@@ -77,6 +71,27 @@ CREATE TABLE medical_procedures(
 	FOREIGN KEY (patient_id) REFERENCES patients(id) 			ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (doctor_id)  REFERENCES medical_personnel(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
+CREATE TABLE medical_condition_drugs(
+	id int AUTO_INCREMENT NOT NULL,
+	medical_condition_id int NOT NULL,
+	drug varchar(50) NOT NULL,
+	description varchar(200) NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(medical_condition_id) REFERENCES medical_conditions(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE medical_procedure_drugs(
+	id int AUTO_INCREMENT NOT NULL,
+	medical_procedure_id int NOT NULL,
+	drug varchar(50) NOT NULL,
+	description varchar(200) NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(medical_procedure_id) REFERENCES medical_procedures(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
 
 -- insert into patients values(5,'hola','mundo',10,10.0,10.0,'masculine','O-','2010/10/10','ju','2222222222',0.0,'true');
 -- insert into users(email,password,permit) values('as','ss',0);
